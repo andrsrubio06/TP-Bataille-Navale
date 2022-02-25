@@ -173,6 +173,14 @@ public class Board implements IBoard{
         return boardHits[y][x];
     }
 
+    public boolean overflow(int x, int y) {
+        return ( 
+            (x >= this.boardShips[0].length ) || 
+            (y >= this.boardShips.length ) ||
+            (x < 0 ) || 
+            (y < 0 )
+        );
+    }
 
 
     /**

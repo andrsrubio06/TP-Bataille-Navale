@@ -2,6 +2,11 @@ package ensta;
 import java.io.Serializable;
 import java.util.List;
 
+import ensta.board.Board;
+import ensta.ship.AbstractShip;
+import ensta.util.ShipOrientation;
+
+
 public class Player {
     /* **
      * Attributs
@@ -33,21 +38,25 @@ public class Player {
         int i = 0;
 
         do {
-            AbstractShip s = ships[i];
-            String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getLength());
-            System.out.println(msg);
-            InputHelper.ShipInput res = InputHelper.readShipInput();
-            // TODO set ship orientation
-            // TODO put ship at given position
+            try {
+                AbstractShip s = ships[i];
+                String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getLength().getValue());
+                System.out.println(msg);
+                InputHelper.ShipInput res = InputHelper.readShipInput();
+                System.out.println("X: " + res.x + " Y: " + res.y);
+                s.setOrientation(ShipOrientation.fromString(res.orientation));
+                board.putShip(s, res.x, res.y);
 
-            // TODO when ship placement successful
-            ++i;
-            done = i == 5;
+                ++i;
+                done = i == 5;
 
-            board.print();
+                board.printGame();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
         } while (!done);
     }
-
+/*
     public Hit sendHit(int[] coords) {
         boolean done;
         Hit hit = null;
@@ -63,7 +72,7 @@ public class Player {
 
         return hit;
     }
-
+*/
     public AbstractShip[] getShips() {
         return ships;
     }

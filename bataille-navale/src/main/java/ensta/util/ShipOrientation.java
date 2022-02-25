@@ -23,6 +23,20 @@ public enum ShipOrientation {
     }
 
     /**
+     * Returns the label value from String value
+     * @param value String
+     * @return Orientation
+     */
+    public static ShipOrientation fromString(String value) {
+        for (ShipOrientation o : ShipOrientation.values()) {
+            if (o.toString().equals(value)) {
+                return o;
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Returns a string representation of the object 
      */
     @Override
