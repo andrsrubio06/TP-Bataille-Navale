@@ -26,6 +26,12 @@ public abstract class AbstractShip{
      */
     protected ShipOrientation Orientation;
 
+
+    /**
+     * Number of impacts received by the ship
+     */
+    protected int strikeCount;
+
     
     public ShipLabel getType() {
         return this.type;
@@ -52,6 +58,14 @@ public abstract class AbstractShip{
     public void setOrientation(ShipOrientation Orientation) 
     {
         this.Orientation = Orientation;
+    }
+
+    public void addStrike() {
+        this.strikeCount++;
+    }
+
+    public boolean isSunk() {
+        return this.strikeCount == this.length.getValue();
     }
 
     /**

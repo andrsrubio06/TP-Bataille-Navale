@@ -2,9 +2,11 @@ package ensta.board;
 
 import ensta.ship.AbstractShip;
 import ensta.ship.Carrier;
+import ensta.ship.ShipState;
 import ensta.util.ShipLabel;
 import ensta.util.ShipLength;
 import ensta.util.ShipName;
+import ensta.util.ColorUtil;
 
 public class Board implements IBoard{
     /**
@@ -13,6 +15,9 @@ public class Board implements IBoard{
     private static final int defaultSize = 10;
 
     private static final String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //26
+
+    private static final char EMPTY_CELL = '.';
+
     /**
     * Name of the board 
     */
@@ -20,11 +25,11 @@ public class Board implements IBoard{
     /**
     * board of ships
     */
-    private int[][] boardShips;
+    private ShipState[][] boardShips;
     /**
     * board of hits 
     */
-    private boolean[][] boardHits;
+    private Boolean[][] boardHits;
 
     /**
      * Constructeur for the class
@@ -34,8 +39,8 @@ public class Board implements IBoard{
     public Board(String name, int size) {
         size = (size>letters.length())?letters.length():size;
         this.name = name;
-        this.boardShips = new int[size][size];
-        this.boardHits = new boolean[size][size];
+        this.boardShips = new ShipState[size][size];
+        this.boardHits = new Boolean[size][size];
         
     }
     
@@ -119,11 +124,13 @@ public class Board implements IBoard{
     }
 
     private String printHits (int i, int j) {
-        return this.boardHits[i][j] != false ? "x" : "." ;
+        return boardHits[i][j] == null ? "." : 
+            ColorUtil.colorize("X", (boardHits[i][j] ? ColorUtil.Color.RED : ColorUtil.Color.WHITE))
+        ;
     }
 
     private String printShips (int i, int j) {
-        return (this.boardShips[i][j] != 0) ? ShipLabel.values()[this.boardShips[i][j]-1].toString() : ".";
+        return (this.boardShips[i][j] != null) ? boardShips[i][j].toString() : Character.toString(EMPTY_CELL);
     }
 
 
@@ -150,7 +157,7 @@ public class Board implements IBoard{
 
     @Override
     public boolean hasShip(int x, int y) {
-        return boardShips[y][x] != 0 ;
+        return boardShips[y][x] != null && !boardShips[y][x].isSunk();
     }
    
     public boolean hasShip() {
@@ -210,7 +217,7 @@ public class Board implements IBoard{
                     break;
             }
             for(int i = 0; i < size; i++) {
-                    this.boardShips[(i*dy)+y][(i*dx)+x] = ship.getName().ordinal()+1;
+                    this.boardShips[(i*dy)+y][(i*dx)+x] = new ShipState(ship);
             }
 
     }

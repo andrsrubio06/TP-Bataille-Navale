@@ -18,8 +18,10 @@ public class App
 
         Board nuevo = new Board("La guerre",10);
         Carrier ship = new Carrier();
-        nuevo.setHit(true, 0, 0);
+        nuevo.setHit(false, 0, 0);
+        nuevo.setHit(true, 1, 1);
         nuevo.putShip(ship, 1, 1);
+        
         nuevo.printGame();
     }
 }
