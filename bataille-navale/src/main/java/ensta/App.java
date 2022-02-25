@@ -1,7 +1,5 @@
 package ensta;
 
-import ensta.Board;
-
 
 /**
  * Hello world!
