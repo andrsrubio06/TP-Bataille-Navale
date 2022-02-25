@@ -1,6 +1,8 @@
-package ensta;
-public interface IBoard { 
+package ensta.board;
 
+import ensta.ship.AbstractShip;
+
+public interface IBoard { 
     /**
      * Get the size of the grids contained in the Board
      * @return the size of the grids contained in the Board
